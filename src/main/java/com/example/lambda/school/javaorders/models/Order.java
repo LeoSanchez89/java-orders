@@ -1,5 +1,7 @@
 package com.example.lambda.school.javaorders.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,10 +18,6 @@ public class Order {
     private double advanceamount;
     private String orderdescription;
 
-//    connects orders to customer
-    @ManyToOne
-    @JoinColumn(name = "custcode", nullable = false)
-    private Customer customer;
 
 //    ORDERSPAYMENTS JOINTABLE
 //    *DOES NOT go in constructor, DOES add setters + getters*
@@ -28,8 +26,18 @@ public class Order {
             joinColumns = @JoinColumn(name = "ordnum"),
             inverseJoinColumns = @JoinColumn(name = "paymentid")
     )
+//    always omit the field that you're in to avoid double values
+    @JsonIgnoreProperties(value = "orders", allowSetters = true)
     private Set<Payment> payments = new HashSet<>();
 // END JOINTABLE
+
+
+//    connects orders to customer
+    @ManyToOne
+    @JoinColumn(name = "custcode", nullable = false)
+//    always omit the field that you're in to avoid double values
+    @JsonIgnoreProperties(value = "orders", allowSetters = true)
+    private Customer customer;
 
     public Order() {
     }
@@ -73,6 +81,14 @@ public class Order {
         this.orderdescription = orderdescription;
     }
 
+    public Set<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
@@ -81,11 +97,5 @@ public class Order {
         this.customer = customer;
     }
 
-    public Set<Payment> getPayments() {
-        return payments;
-    }
 
-    public void setPayments(Set<Payment> payments) {
-        this.payments = payments;
-    }
 }

@@ -1,6 +1,8 @@
 package com.example.lambda.school.javaorders.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +21,8 @@ public class Payment {
 //    ORDERSPAYMENTS JOINTABLE
 //    *DOES NOT go in constructor, DOES add setters + getters*
     @ManyToMany(mappedBy = "payments")
+//    always omit the field that you're in to avoid double values
+    @JsonIgnoreProperties(value = "payment", allowSetters = true)
     private Set<Order> orders = new HashSet<>();
 //    END JOINTABLE
 

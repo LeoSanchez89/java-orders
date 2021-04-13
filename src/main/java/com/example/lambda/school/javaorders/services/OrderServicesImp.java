@@ -6,6 +6,7 @@ import com.example.lambda.school.javaorders.repositories.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Transactional
@@ -14,6 +15,12 @@ public class OrderServicesImp implements OrderServices{
 
     @Autowired
     OrderRepo orderrepo;
+
+    @Override
+    public Order findOrderById(long id) {
+        return orderrepo.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("Order " + id + " Not Found!"));
+    }
 
     @Transactional
     @Override
