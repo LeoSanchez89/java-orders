@@ -10,4 +10,6 @@ public interface CustomerServices {
     List<Customer> findAllCustomerOrders();
     Customer findCustomerById(long id);
     List<Customer> findByNameLike(String subname);
+    void delete(long id);
+    Customer update(Customer customer, long id);
 }

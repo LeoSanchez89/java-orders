@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "orders")
+@JsonIgnoreProperties(value = {"hasordamount", "hasadvamount"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +18,12 @@ public class Order {
     private double ordamount;
     private double advanceamount;
     private String orderdescription;
+
+    @Transient
+    public boolean hasordamount = false;
+    @Transient
+    public boolean hasadvamount = false;
+
 
 
 //    ORDERSPAYMENTS JOINTABLE
