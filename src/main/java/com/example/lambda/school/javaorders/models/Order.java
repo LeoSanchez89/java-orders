@@ -69,6 +69,7 @@ public class Order {
     }
 
     public void setOrdamount(double ordamount) {
+        hasordamount = true;
         this.ordamount = ordamount;
     }
 
@@ -77,6 +78,7 @@ public class Order {
     }
 
     public void setAdvanceamount(double advanceamount) {
+        hasadvamount = true;
         this.advanceamount = advanceamount;
     }
 
